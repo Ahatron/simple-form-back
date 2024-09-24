@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/auth/user.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Transaction {
@@ -8,8 +9,8 @@ export class Transaction {
     @Column()
     dateTime: string;
 
-    @Column()
-    author: string;
+    @ManyToOne(() => User, (user) => user.transactions) // Установите обратное отношение
+    author: User;
 
     @Column('decimal', { precision: 10, scale: 2 })
     sum: number;
@@ -19,4 +20,5 @@ export class Transaction {
 
     @Column({ nullable: true })
     comment: string;
+
 }
